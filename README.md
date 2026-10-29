@@ -1,22 +1,49 @@
 # AI Flood and Natural Disaster Early-Warning Support
 
-![Original project cover](assets/cover.svg)
+Studying temporal trends while keeping statistical estimates separate from official forecasts.
 
-> **Status:** Demonstration-grade source code using synthetic examples; no real operational deployment, authorized live feed, or independently verified field impact.
+[Setup](#local-installation--setup-guide) · [Architecture](#architecture--system-design-diagram) · [Detailed guide](PROJECT_GUIDE.md) · [Repository standard](docs/REPOSITORY_STANDARD.md)
 
-**Public need / intended users:** Studying temporal trends while keeping statistical estimates separate from official forecasts. **Audience:** Researchers and disaster preparedness teams.
+## Visuals
 
-**Technical evidence:** Time-series regression • chronological tests • mapping plan. Lagged Ridge model with chronological MAE vs persistence baseline, using only synthetic fixture or uploaded numerical series.
+![Original project cover](<assets/cover.svg>)
 
-## Reproducible setup
+Existing project visual; diagrams and illustrative graphics are not evidence of a deployed application.
 
-Run from the root of this independent project branch:
+## Live Link / Demo
+
+Run the local demo using the setup guide below. No public deployment URL has been verified for this documentation update.
+
+## Key Features
+
+Time-series regression • chronological tests • mapping plan. Lagged Ridge model with chronological MAE vs persistence baseline, using only synthetic fixture or uploaded numerical series.
+
+## Tech Stack
+
+![Python](https://img.shields.io/badge/Python-334155?style=flat-square) ![FastAPI](https://img.shields.io/badge/FastAPI-334155?style=flat-square) ![scikit-learn](https://img.shields.io/badge/scikit--learn-334155?style=flat-square) ![NumPy](https://img.shields.io/badge/NumPy-334155?style=flat-square) ![Docker](https://img.shields.io/badge/Docker-334155?style=flat-square)
+
+Dependency versions and optional packages are defined in the repository manifests.
+
+## Architecture / System Design Diagram
+
+[Architecture documentation / diagram](<assets/architecture.svg>)
+
+## Local Installation & Setup Guide
 
 ```bash
-pip install -r requirements.txt
+git clone https://github.com/harshakavali81-collab/AI-Flood-Disaster-Early-Warning.git
+cd AI-Flood-Disaster-Early-Warning
+```
+
+Run from the repository root:
+
+```bash
+python -m venv .venv
+# Windows PowerShell: .venv\Scripts\Activate.ps1
+# macOS/Linux: source .venv/bin/activate
+python -m pip install -r requirements.txt
 python cli.py
 uvicorn app.main:app --reload
-python -m pytest -q
 python -m pytest -q
 ```
 
@@ -24,36 +51,42 @@ python -m pytest -q
 
 **Example payload:** [sample_request.json](sample_request.json). The FastAPI interactive schema is at `http://127.0.0.1:8000/docs`.
 
-## Architecture, graphics and reproducibility
+## Challenges & Solutions
 
-![Architecture illustration](assets/architecture.svg)
+The prototype must separate demonstration outputs from authoritative information. Its documented design uses synthetic examples, explicit source/provenance boundaries and project-specific validation; real operational adapters and field validation remain future work. See [the model card](docs/MODEL_CARD.md) for limits and evaluation assumptions.
 
-![Illustrative, fictional-data graphic](assets/synthetic-trend.svg)
+## Future Improvements
 
-- [Workflow source](docs/workflow.mmd) and [detailed architecture](docs/ARCHITECTURE.md).
-- [Model card and evaluation plan](docs/MODEL_CARD.md), [threat model](docs/THREAT_MODEL.md).
-- Synthetic fixture: `sample_request.json`; run in `cli.py`.
-- Shared service: `app/` (model and routing implementation), `tests/` (automated checks), `Dockerfile`, and local pytest suite.
-- Frontend dashboard: `frontend/index.html`; this requires the API server to function.
+- Capture a reproducible end-to-end demo with runtime versions and sample inputs.
+- Expand regression checks for invalid inputs and documented edge cases.
+- Record measured results, data provenance and deployment limitations alongside each release.
 
-## Dataset / source trust
+## Scope and supporting evidence
 
-**Planned authorized sources:** IMD authorised feeds; APSDMA and CWC measurements (NOT connected). Demonstration data is fabricated; no source licensing or source freshness has been verified through a real ingest.
+> **Status:** Demonstration-grade source code using synthetic examples; no real operational deployment, authorized live feed, or independently verified field impact.
 
-## Evaluation: do not fabricate results
+**Public need / intended users:** Studying temporal trends while keeping statistical estimates separate from official forecasts. **Audience:** Researchers and disaster preparedness teams.
 
-**Measure:** MAE, RMSE, event recall, lead time and calibration after real labels. The shared forecast modules report baseline and model MAE on chronological holdout when enough observations are provided. Running the evaluation script computes a small synthetic retrieval smoke test. Neither proves live field accuracy.
+**Technical evidence:** Time-series regression • chronological tests • mapping plan. Lagged Ridge model with chronological MAE vs persistence baseline, using only synthetic fixture or uploaded numerical series.
 
-## Responsible AI constraints
+## Repository Structure
 
-Model numbers cannot be treated as actual flood predictions or public warnings. Report uncertainty and require human approval for consequential decisions.
+| Location | Purpose |
+| --- | --- |
+| `app/` | Application package |
+| `frontend/` | Frontend interface |
+| `tests/` | Tests |
+| `docs/` | Documentation |
+| `assets/` | Visual assets |
+| `.github/` | Issue forms, PR template and automated checks |
 
-**Not yet complete:** licensed production dataset and adapters, professionally reviewed multilanguage support, large independent real-world evaluations, production authentication, secure audit trail, public hosting and domain-expert acceptance. Details: [Acceptance criteria](docs/ACCEPTANCE.md).
+[Complete file inventory and workflow](docs/REPOSITORY_STANDARD.md). Runtime entry points retain their existing paths.
 
-[Ten-project collection](https://github.com/harshakavali81-collab/Enterprise-AI-Intelligence-Platform-Development/tree/main/public-benefit-ai/projects) · [Main repository](https://github.com/harshakavali81-collab/Enterprise-AI-Intelligence-Platform-Development)
+## Workflow & Tracking
 
-## Standalone branch
+Use the [bug and feature forms](https://github.com/harshakavali81-collab/AI-Flood-Disaster-Early-Warning/issues/new/choose) to define work with acceptance criteria. Keep tasks in Todo → In progress → Review → Done, and link a pull request with `Closes #<number>`. See [the maintenance workflow](docs/REPOSITORY_STANDARD.md#workflow).
 
-This branch has a separate Git tree and a one-project API/UI but belongs to the Enterprise AI repository; it is **not** an independent GitHub repository. Demonstration uses synthetic data, no official alert systems or real-world accuracy claims.
+## License
 
-Start both services: `docker compose up --build`. Browser: `http://127.0.0.1:5173`; API: `http://127.0.0.1:8000/docs`.
+Original project software is available under the [MIT License](LICENSE). See [licensing scope](docs/LICENSING.md) for third-party and data exclusions.
+
